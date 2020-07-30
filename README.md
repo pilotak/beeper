@@ -34,7 +34,7 @@ int main() {
 ```
 
 ## How to change `Pause` duration
-Remember that the value will be multiplied by 16 as a result. Total "silence" time: 50*16 + 2*160ms (delay between tones) = 1120ms
+Remember that the value will be multiplied by 16 as a result. Total "silence" time: (50 * 16) + (2 * 160ms) *(delay between tones)* = 1120ms
 `mbed_app.json`
 ```json
 {
