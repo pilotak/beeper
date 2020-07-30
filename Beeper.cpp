@@ -24,13 +24,24 @@ SOFTWARE.
 
 #include "Beeper.h"
 
-Beeper::Beeper(PinName pin):
-    _pin(pin, false) {
+Beeper::Beeper(PinName pin) {
+    _pin = new DigitalOut(pin);
+    MBED_ASSERT(_pin);
+}
+
+Beeper::Beeper(DigitalOut *out) {
+    MBED_ASSERT(out);
+
+    _pin = out;
 }
 
 Beeper::~Beeper() {
     if (_pattern != nullptr) {
         delete[] _pattern;
+    }
+
+    if (_pin != nullptr) {
+        delete _pin;
     }
 }
 
@@ -51,25 +62,23 @@ void Beeper::pattern(const void *pattern, size_t length, bool loop) {
     toggle();
 }
 
-Beeper &Beeper::operator= (int value) {
+void Beeper::write(int value) {
     _timeout.detach();
     _pattern_offset = 0;
     _pattern_length = 0;
-    _pin = value;
-
-    return *this;
+    _pin->write(value);
 }
 
 void Beeper::toggle() {
     uint32_t duration;
 
     if (_pattern_offset & 1) { // delay between tones
-        _pin.write(0);
+        _pin->write(0);
         duration = MBED_CONF_BEEPER_DELAY;
 
     } else { // tone
         if (_pattern[_pattern_offset >> 1] != Pause) {
-            _pin.write(1);
+            _pin->write(1);
         }
 
         duration = _pattern[_pattern_offset >> 1];

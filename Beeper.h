@@ -36,6 +36,7 @@ class Beeper {
     };
 
     Beeper(PinName pin);
+    Beeper(DigitalOut *out);
     ~Beeper(void);
 
     /**
@@ -52,11 +53,21 @@ class Beeper {
      *
      * @param value 1 = turn on, 0 turn off
      */
-    Beeper &operator= (int value);
+    void write(int value);
+
+    /**
+     * @brief Shorthand for direct control of the pin, it also cancels the pattern played
+     *
+     * @param value 1 = turn on, 0 turn off
+     */
+    Beeper &operator= (int value) {
+        write(value);
+        return *this;
+    }
 
   private:
     LowPowerTimeout _timeout;
-    DigitalOut _pin;
+    DigitalOut *_pin;
     volatile size_t _pattern_offset = 0;
     size_t _pattern_length = 0;
     bool _loop = false;
@@ -64,7 +75,7 @@ class Beeper {
 
     /**
      * @brief Internal callback for toggling pin
-     * 
+     *
      */
     void toggle();
 };
