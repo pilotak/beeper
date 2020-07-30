@@ -55,7 +55,7 @@ class Beeper {
     Beeper &operator= (int value);
 
   private:
-    Timeout _timeout;
+    LowPowerTimeout _timeout;
     DigitalOut _pin;
     volatile size_t _pattern_offset = 0;
     size_t _pattern_length = 0;
