@@ -1,0 +1,25 @@
+{
+  "name": "beeper",
+  "config": {
+    "short_tone": {
+      "help": "Duration of short tone (ms/16)",
+      "value": 10,
+      "required": true
+    },
+    "long_tone": {
+      "help": "Duration of long tone (ms/16)",
+      "value": 20,
+      "required": true
+    },
+    "pause": {
+      "help": "Duration of pause (ms/16), can't be the same value as short_tone or long_tone, actual pause will be long this+2*delay",
+      "value": 5,
+      "required": true
+    },
+    "delay": {
+      "help": "Delay between tones (ms/16)",
+      "value": 10,
+      "required": true
+    }
+  }
+}

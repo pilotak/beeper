@@ -1,3 +1,4 @@
+/*
 MIT License
 
 Copyright (c) 2020 Pavel Slama
@@ -19,3 +20,53 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+
+#ifndef BEEPER_H
+#define BEEPER_H
+
+#include "mbed.h"
+
+class Beeper {
+  public:
+    enum tone_type {
+        Short = MBED_CONF_BEEPER_SHORT_TONE,
+        Long = MBED_CONF_BEEPER_LONG_TONE,
+        Pause = MBED_CONF_BEEPER_PAUSE,
+    };
+
+    Beeper(PinName pin);
+    ~Beeper(void);
+
+    /**
+     * @brief Play the pattern
+     *
+     * @param pattern pointer to the pattern array (time/16)
+     * @param length pattern array length
+     * @param loop whether to play in loop or as oneshot
+     */
+    void pattern(const void *pattern, size_t length, bool loop = false);
+
+    /**
+     * @brief For direct control of the pin, it also cancels the pattern played
+     *
+     * @param value 1 = turn on, 0 turn off
+     */
+    Beeper &operator= (int value);
+
+  private:
+    Timeout _timeout;
+    DigitalOut _pin;
+    volatile size_t _pattern_offset = 0;
+    size_t _pattern_length = 0;
+    bool _loop = false;
+    uint8_t *_pattern;
+
+    /**
+     * @brief Internal callback for toggling pin
+     * 
+     */
+    void toggle();
+};
+
+#endif  // BEEPER_H
