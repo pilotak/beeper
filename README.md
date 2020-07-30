@@ -1,7 +1,7 @@
 # Beeper
 [![Framework Badge mbed](https://img.shields.io/badge/framework-mbed-008fbe.svg)](https://os.mbed.com/)
 
-Mbed library for simplyfication of toggling the output pin in time pattern ie.: buzzer/LED or it can be used as morse code generator
+Mbed library for simplification of toggling the output pin in time pattern ie.: buzzer/LED or it can be used as morse code generator
 
 You can choose built-in tone duration or you can specify your own. All time units are in millisecods with **bit gain 16**. That means if you want to turn on the output for 16ms you would write it as 1 (32ms = 2, 64ms = 3, etc.), this technique saves the RAM because the "pattern" will be stored in 8-bit array - this has of course a limitation of maximum tone length to 4080ms.
 
