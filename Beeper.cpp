@@ -55,7 +55,7 @@ void Beeper::pattern(const void *pattern, size_t length, bool loop) {
         delete[] _pattern;
     }
 
-    auto *pattern_ptr = static_cast<const uint8_t *>(pattern);
+    const uint8_t *pattern_ptr = static_cast<const uint8_t *>(pattern);
     _pattern = new uint8_t[length];
     memcpy(_pattern, pattern_ptr, length);
 

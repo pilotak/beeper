@@ -67,11 +67,11 @@ class Beeper {
 
   private:
     Timeout _timeout;
-    DigitalOut *_pin;
+    DigitalOut *_pin = nullptr;
     volatile size_t _pattern_offset = 0;
     size_t _pattern_length = 0;
     bool _loop = false;
-    uint8_t *_pattern;
+    uint8_t *_pattern = nullptr;
 
     /**
      * @brief Internal callback for toggling pin
